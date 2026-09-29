@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="proyectovbf.views.PrincipalController">
+
+    <!--menu superior-->
+    <top>
+        <VBox>
+            <MenuBar>
+                <!--menu sesion-->
+                <Menu text="Sesión">
+                    <MenuItem onAction="#onMenuLogin" text="Login / Cambiar usuario" />
+                    <SeparatorMenuItem />
+                    <MenuItem onAction="#onMenuSalir" text="Salir" />
+                </Menu>
+            </MenuBar>
+
+            <!--barra estado-->
+            <HBox spacing="20" style="-fx-padding: 6 12; -fx-background-color: #e8e8e8;">
+                <Label fx:id="lblUsuarioActual" style="-fx-font-weight: bold;" />
+                <Label text="|" />
+                <Label fx:id="lblGrupoActual" style="-fx-font-style: italic;" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!--contenido central-->
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            
+            <!--tab grupo-->
+            <Tab text="Grupo">
+                <VBox spacing="14" style="-fx-padding: 16;">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Crear nuevo grupo" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Nombre del grupo:" />
+                        <TextField fx:id="txtNombreGrupo" prefWidth="200" promptText="Ej: Viaje a Roma" />
+                        <Button onAction="#onCrearGrupo" text="Crear Grupo" />
+                    </HBox>
+                    <Separator />
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Seleccionar grupo activo" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Grupo:" />
+                        <ComboBox fx:id="cboGrupos" onAction="#onSeleccionarGrupo" prefWidth="200" />
+                        <Button onAction="#onSeleccionarGrupo" text="Seleccionar" />
+                    </HBox>
+                    <Separator />
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Miembros del grupo activo" />
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label text="Añadir miembro:" />
+                        <TextField fx:id="txtNuevoMiembro" prefWidth="180" promptText="Nombre de usuario" />
+                        <Button onAction="#onAgregarMiembro" text="Añadir" />
+                        <Button onAction="#onEliminarMiembro" text="Eliminar seleccionado" />
+                    </HBox>
+                    <ListView fx:id="lstMiembros" prefHeight="120" />
+                </VBox>
+            </Tab>
+
+            <!--tab pagos-->
+            <Tab text="Agregar Pago">
+                <VBox spacing="14" style="-fx-padding: 16;">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Registrar nuevo pago en el grupo activo" />
+                    <GridPane hgap="12" vgap="10">
+                        <Label text="Concepto:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtConceptoPago" prefWidth="260" promptText="Ej: Cena restaurante" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Importe (€):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtImportePago" promptText="Ej: 45.50" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                    <HBox spacing="10">
+                        <Button onAction="#onAgregarPago" text="Agregar Pago" />
+                        <Button onAction="#onEliminarPago" text="Eliminar seleccionado" />
+                    </HBox>
+                    <Label style="-fx-font-weight: bold;" text="Pagos registrados:" />
+                    <ListView fx:id="lstPagos" prefHeight="220" />
+                </VBox>
+            </Tab>
+
+            <!--tab finalizar-->
+            <Tab text="Finalizar">
+                <VBox spacing="14" style="-fx-padding: 16;">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Resumen final del grupo activo" />
+                    <Button onAction="#onFinalizar" style="-fx-font-size: 13px;" text="Calcular y mostrar resumen" />
+                    <TextArea fx:id="txtResultado" editable="false" prefHeight="340" style="-fx-font-family: monospace;" wrapText="true" />
+                </VBox>
+            </Tab>
+
+            <!--tab usuarios-->
+            <Tab text="Usuarios">
+                <VBox spacing="14" style="-fx-padding: 16;">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 13px;" text="Gestión de usuarios" />
+                    <GridPane hgap="12" vgap="10">
+                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                        <TextField fx:id="txtNuevoUsuario" prefWidth="220" promptText="Nombre de usuario" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtEmailNuevo" promptText="correo@ejemplo.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Contraseña:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                        <PasswordField fx:id="txtClaveNuevo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints />
+                            <RowConstraints />
+                            <RowConstraints />
+                        </rowConstraints>
+                    </GridPane>
+                    <HBox spacing="10">
+                        <Button onAction="#onAgregarUsuario" text="Agregar Usuario" />
+                        <Button onAction="#onEliminarUsuario" text="Eliminar seleccionado" />
+                    </HBox>
+                    <Label style="-fx-font-weight: bold;" text="Usuarios registrados:" />
+                    <ListView fx:id="lstUsuarios" prefHeight="180" />
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+</BorderPane>
