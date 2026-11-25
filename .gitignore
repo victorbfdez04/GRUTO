@@ -74,3 +74,4 @@ application-secrets.properties
 
 # Sistema (por si algún día trabajas también desde Mac)
 .DS_Store
+datos.dat
